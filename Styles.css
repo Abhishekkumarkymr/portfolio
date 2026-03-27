@@ -1,83 +1,117 @@
-body {
-    margin:0;
-    padding:0;
-    font-family: sans-serif;
+const text = "Computer Science Graduate | Web Developer | Problem Solver";
+let i = 0;
+
+function typingEffect() {
+    const el = document.getElementById("typing");
+
+    if (el && i < text.length) {
+        el.innerHTML += text.charAt(i);
+        i++;
+        setTimeout(typingEffect, 40);
+    } else {
+        // blinking cursor
+        setInterval(() => {
+            if (el.innerHTML.endsWith("|")) {
+                el.innerHTML = el.innerHTML.slice(0, -1);
+            } else {
+                el.innerHTML += "|";
+            }
+        }, 500);
+    }
 }
 
-.hero{
-    position: relative;
-    width: 100%;
-    height: 100vh;
-    background: #c1c1bd;
-   
-}
-nav{
-    display: flex;
-    width: 84%;
-    margin: auto;
-    padding: 20px 0;
-    align-items: center;
-    justify-content: space-between;
-}
-nav ul li{
-    display: inline-block;
-    list-style: none;
-    margin:10px 20px;
-}
-nav ul li a{
-      text-decoration:none;
-      color: rgb(23, 21, 21);
-      font-weight: bold;
-}
-nav ul li a:hover{
-     color: rgb(207, 19, 28);
-}
-.dete1{
-    margin-left: 8%;
-    margin-top: 13%;
+window.addEventListener("load", typingEffect);
+
+
+// =====================
+// 🔥 SMOOTH SCROLL
+// =====================
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener("click", function (e) {
+        e.preventDefault();
+
+        const target = document.querySelector(this.getAttribute("href"));
+        if (target) {
+            target.scrollIntoView({
+                behavior: "smooth"
+            });
+        }
+    });
+});
+
+
+// =====================
+// 🌙 DARK MODE TOGGLE
+// =====================
+function toggleDarkMode() {
+    document.body.classList.toggle("dark");
 }
 
-.dete1 h1{
-        font-size: 50px;
-        color: #212121;
-        margin-bottom: 20px;
+
+// =====================
+// 🔥 SCROLL REVEAL ANIMATION
+// =====================
+const sections = document.querySelectorAll("section");
+
+function revealSections() {
+    sections.forEach(section => {
+        const top = section.getBoundingClientRect().top;
+
+        if (top < window.innerHeight - 100) {
+            section.style.opacity = "1";
+            section.style.transform = "translateY(0)";
+        }
+    });
 }
 
-span{
-    color: rgb(189, 27, 37);
+window.addEventListener("scroll", revealSections);
+
+
+// =====================
+// 🔥 PROGRESS BAR
+// =====================
+window.addEventListener("scroll", () => {
+    let scrollTop = document.documentElement.scrollTop;
+    let height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+
+    let progress = (scrollTop / height) * 100;
+
+    const bar = document.getElementById("progress-bar");
+    if (bar) {
+        bar.style.width = progress + "%";
+    }
+});
+
+
+// =====================
+// 🔥 IMAGE HOVER TILT EFFECT
+// =====================
+const image = document.querySelector(".image img");
+
+if (image) {
+    image.addEventListener("mousemove", (e) => {
+        let x = e.offsetX;
+        let y = e.offsetY;
+
+        let rotateX = -(y / 10);
+        let rotateY = x / 10;
+
+        image.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+    });
+
+    image.addEventListener("mouseleave", () => {
+        image.style.transform = "rotateX(0) rotateY(0)";
+    });
 }
 
-.detel p{
-    color: rgb(245, 238, 41);
-    line-height: 22px;
-}
 
-.detel a{
-    background: #212121;
-    padding:10px 18px;
-    text-decoration: none;
-    font-weight:bold;
-    color: rgb(98, 27, 27);
-    display: inline-block;
-    margin: 30px;
-    border-radius: 5px;
+// =====================
+// 🔥 BUTTON CLICK FEEDBACK
+// =====================
+const btn = document.querySelector(".detail a");
 
-}
-/* 
-.images{
-    width: 45%;
-    height: 80%;
-    position: absolute;
-    bottom: 0;
-    right: 100px;
-} */
-
-.images img{
-       height: 50%;
-       margin-left: 300px;
-       position: absolute;
-       left: 40%;
-       bottom: 100px;
-       transform: translateX(-50);
-       transition: bottom 1s, left 1s;
+if (btn) {
+    btn.addEventListener("click", () => {
+        console.log("Resume Downloaded 🚀");
+    });
 }
